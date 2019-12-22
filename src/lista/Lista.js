@@ -48,18 +48,24 @@ const Lista = (props) =>{
       </View>
       <Modal visible={displayed} animationType={"slide"} transparent={true}>
         <View style={styles.modal}>
-          <Text style={styles.textModal}>Ingrese los datos de eventos</Text>
+          <Text style={styles.textModal}>Ingrese los datos de los eventos</Text>
           <TextInput style={styles.textInput} placeholder='Descripción del evento'
             onChangeText={eventoTxtDescripcion}
             value={descripcion}
           />
           <TouchableOpacity style={styles.btn2} onPress={showDateTimePicker} >
             <Text style={styles.textColor}>{fecha}</Text>
+            <Text style={styles.textColor}>{hora}</Text>
           </TouchableOpacity>
           <DateTimePicker
             isVisible={isDateTimePickerVisible}
             onConfirm={handleDatePicked}
             onCancel={hideDateTimePicker}
+            mode="datetime"
+            placeholder="Fecha"
+            format="YYYY-MM-DD HH:mm"
+            minDate="2019-01-01"
+            maxDate="2030-12-31"
           />
           <TouchableOpacity style={styles.button} onPress={agregarEvento}>
             <Text style={styles.textColor}>Crear evento</Text>

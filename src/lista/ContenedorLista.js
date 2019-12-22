@@ -13,7 +13,7 @@ export default class ContenedorLista extends Component {
       displayed: false,
       descripcion: '',
       fecha: 'Fecha',
-      hora: '9:00 a.m. - 10:00 p.m.',
+      hora: 'Hora',
       isDateTimePickerVisible: false
     };
   }
@@ -39,14 +39,14 @@ export default class ContenedorLista extends Component {
     data.push({
       id: (data.length+1).toString(),
       color:"#87CEEB",
-      name: descripcion,//Los datos de aqui son del destructuring
-      tags: [fecha,hora]//Los datos de aqui son del destructuring
+      name: descripcion,
+      tags: [fecha,hora]
     });
     this.setState({
       data: data,
       descripcion: '',
-      fecha: '30/08/19',
-      hora: '9:00 a.m. - 10:00 p.m.',
+      fecha: fecha,
+      hora: hora,
     })
     this.togglePicker();
   }
@@ -62,7 +62,8 @@ export default class ContenedorLista extends Component {
   handleDatePicked = date => {
     console.log("A date has been picked: ", date);
     this.setState({
-        fecha: date.toDateString()
+        fecha: date.toDateString(),
+        hora: date.toLocaleTimeString()
     });
     this.hideDateTimePicker();
   };  
