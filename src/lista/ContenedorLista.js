@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Alert,
+  Alert, AsyncStorage
 } from 'react-native';
 import Lista from './Lista';
 
@@ -16,6 +16,32 @@ export default class ContenedorLista extends Component {
       hora: 'Hora',
       isDateTimePickerVisible: false
     };
+    this.getDataToAsyncStorage();
+  }
+
+  getDataToAsyncStorage = async () => {
+    try {
+      let data = await AsyncStorage.getItem('data');
+      if (data === null) {
+        data = this.data;
+        await AsyncStorage.setItem('data', JSON.stringify(data));
+        this.setState({data: data});
+        return;
+      }
+      data = JSON.parse(data);
+      this.setState({data: data});
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  setDataToAsyncStorage = async () => {
+    try {
+      let data = this.state.data;
+      await AsyncStorage.setItem('data', JSON.stringify(data));
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   cardClickEventListener = (item) => {
@@ -59,12 +85,13 @@ export default class ContenedorLista extends Component {
     this.setState({ isDateTimePickerVisible: false });
   };
  
-  handleDatePicked = date => {
+  handleDatePicked = async date => {
     console.log("A date has been picked: ", date);
     this.setState({
         fecha: date.toDateString(),
         hora: date.toLocaleTimeString()
     });
+    await this.setDataToAsyncStorage();
     this.hideDateTimePicker();
   };  
 
